@@ -13,7 +13,7 @@ def search_users(town_name,sex,token):#token = ""
     vk = vk_api.VkApi(token=token)
     vk._auth_token()
 
-    print('Авторизовано')
+    #print('Авторизовано')
     #Переменные для статистики
     banned_users = 0
     closed_users = 0
@@ -38,10 +38,12 @@ def search_users(town_name,sex,token):#token = ""
     end_list = []
 
     def decor():
-        print('\n'*3)
+        #print('\n'*3)
+        a = 0
+        
 
     city_info = vk.method("database.getCities", {"q": town_name, "country_id": 1, "need_all": 0})
-    print(city_info)
+    #print(city_info)
     city_id = city_info["items"][0]["id"]
     town_name = city_info["items"][0]['title']
     decor()
@@ -52,8 +54,8 @@ def search_users(town_name,sex,token):#token = ""
     #ПЕРЕЧИСЛЕНИЕ ГРУПП
 
     for i in groups:
-        print("id: {}".format(i['id'])+' name: {}'.format(i['name']))
-        print()
+        #print("id: {}".format(i['id'])+' name: {}'.format(i['name']))
+        #print()
 
     decor()
 
@@ -62,8 +64,8 @@ def search_users(town_name,sex,token):#token = ""
     kash_id = []
 
     for i in groups:
-        print(i['name'])
-        x = 10 #Множитель числа участников выборки
+        #print(i['name'])
+        x = 100 #Множитель числа участников выборки
         offset = 0 #Больший обхват
         for k in range(0,10):
             offset = int(k * x)       #id, sex, bdate, city, contacts, education
@@ -160,12 +162,12 @@ def search_users(town_name,sex,token):#token = ""
 
     decor()
 
-    print("Найдено {} пользователей, среди них {} забаненно и {} закрыли страничку. \nПо полу подошло {} пользователей.\nВ нужном городе из них {} пользователей\nГород скрыт у {} пользователей".format(finded_users,banned_users,closed_users, finded_sex_users, finded_town_users, not_finded_town_users))
-    print("Повтор пользователей в группах встретился {} раз.".format(repeat_users))
+    #print("Найдено {} пользователей, среди них {} забаненно и {} закрыли страничку. \nПо полу подошло {} пользователей.\nВ нужном городе из них {} пользователей\nГород скрыт у {} пользователей".format(finded_users,banned_users,closed_users, finded_sex_users, finded_town_users, not_finded_town_users))
+    #print("Повтор пользователей в группах встретился {} раз.".format(repeat_users))
 
-    print("Прошло {} секунд".format(time()-start))
+    #print("Прошло {} секунд".format(time()-start))
 
     decor()
     for item in end_list:
         print(item)
-    print(len(end_list))
+    #print(len(end_list))
