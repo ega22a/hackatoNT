@@ -13,7 +13,7 @@ def search_users(town_name,sex,token):#token = ""
     vk = vk_api.VkApi(token=token)
     vk._auth_token()
 
-    #print('Авторизовано')
+    print('Авторизовано')
     #Переменные для статистики
     banned_users = 0
     closed_users = 0
@@ -34,7 +34,7 @@ def search_users(town_name,sex,token):#token = ""
                 "points": 0}
     #
     number_phone_allow_symbols = ['+','0','1','2','3','4','5','6','7','8','9']
-    json_list = ["id","name","city","sex","education","education_area","bdate",'mobile_phone',"points"]
+    json_list = ["id","id_vk","name","city","sex","education","education_area","bdate",'mobile_phone',"points"]
     end_list = []
 
     def decor():
@@ -54,7 +54,7 @@ def search_users(town_name,sex,token):#token = ""
     #ПЕРЕЧИСЛЕНИЕ ГРУПП
 
     for i in groups:
-        #print("id: {}".format(i['id'])+' name: {}'.format(i['name']))
+        print("id: {}".format(i['id'])+' name: {}'.format(i['name']))
         #print()
 
     decor()
@@ -64,7 +64,7 @@ def search_users(town_name,sex,token):#token = ""
     kash_id = []
 
     for i in groups:
-        #print(i['name'])
+        print(i['name'])
         x = 100 #Множитель числа участников выборки
         offset = 0 #Больший обхват
         for k in range(0,10):
@@ -85,7 +85,7 @@ def search_users(town_name,sex,token):#token = ""
                                     if j['id'] not in kash_id:
                                         #json_list = ["id","name","city","sex","education","education_area","bdate",'mobile_phone',"points"]
                                         kash_id.append(j['id'])
-                                        kash_to_json = [j['id'],j['first_name']+" "+j['last_name'],town_name]
+                                        kash_to_json = [finded_town_users,j['id'],j['first_name']+" "+j['last_name'],town_name]
                                         kash_points = 0
                                     
                                         if j['sex'] == 2:
