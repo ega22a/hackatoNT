@@ -14,3 +14,4 @@ else:
     _city = requests.getfirst("city")
     _sex = requests.getfirst("sex")
     print(gate_function(_city,_sex))
+#print(gate_function('Нижний Тагил',1))
