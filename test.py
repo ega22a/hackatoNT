@@ -1,10 +1,10 @@
 import vk_api
-
+import string
 from time import time
 
 start = time()
 
-token = "8953e9893b457e7a1ac7753390a91aaa9e8d949203ed11b3de2aac61f8ff8af89e4dfb8119d6d45f2cd29"
+token = "6c0ee9514eb72fe49d77723105b1f5652b1e109584bdfef0ae5e8b05dc453e9e3ccdbe8d89f62981b673d"
 vk = vk_api.VkApi(token=token)
 vk._auth_token()
 
@@ -34,6 +34,7 @@ end_json = {"id": 0,
             "bdate": "",
             "points": 0}
 #
+number_phone_allow_symbols = ['+','0','1','2','3','4','5','6','7','8','9']
 json_list = ["id","name","city","sex","education","education_area","bdate",'mobile_phone',"points"]
 end_list = []
 
@@ -43,7 +44,7 @@ def decor():
 city_info = vk.method("database.getCities", {"q": town_name, "country_id": 1, "need_all": 0})
 print(city_info)
 city_id = city_info["items"][0]["id"]
-
+town_name = city_info["items"][0]['title']
 decor()
 
 q = object_name + " " + town_name
@@ -63,7 +64,7 @@ kash_id = []
 
 for i in groups:
     print(i['name'])
-    x = 1 #Множитель числа участников выборки
+    x = 1000 #Множитель числа участников выборки
     offset = 0 #Больший обхват
     for k in range(0,10):
         offset = int(k * x)       #id, sex, bdate, city, contacts, education
@@ -116,11 +117,23 @@ for i in groups:
                                     except:
                                         kash_to_json.append("Н/Д")
 
+                                    kash_mobile_phone = str(j['mobile_phone'])
+                                    mobile_phone = ''
+                                    if len(kash_mobile_phone) > 8:
+                                        if int(kash_mobile_phone[0]) == 9:
+                                            mobile_phone += '+7'
+                                        if int(kash_mobile_phone[0]) == 8:
+                                            mobile_phone += '+7'
+                                        for ii in range(1,len(kash_mobile_phone)):
+                                            #print(kash_mobile_phone[ii],kash_mobile_phone[ii] in number_phone_allow_symbols)
+                                            if kash_mobile_phone[ii] in number_phone_allow_symbols:
+                                                mobile_phone += str(kash_mobile_phone[ii])
+                                        #print(kash_mobile_phone, ' === ', mobile_phone)
                                     try:
-                                        if len(str(j['mobile_phone'])) < 11:
+                                        if len(mobile_phone) < 11:
                                             kash_to_json.append("Н/У")
                                         else:
-                                            kash_to_json.append(j['mobile_phone'])
+                                            kash_to_json.append(mobile_phone)
                                             kash_points += 1
                                     except:
                                         kash_to_json.append("Н/Д")
@@ -154,4 +167,5 @@ print("Повтор пользователей в группах встрети�
 print("Прошло {} секунд".format(time()-start))
 
 decor()
-print(end_list)
+for item in end_list:
+    print(item)
